@@ -1,27 +1,28 @@
 package com.br.waldir.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.waldir.domain.Categoria;
+import com.br.waldir.servives.CategoriaServici;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResouces {
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Categoria> listar() {
-		Categoria cat01 = new Categoria(1,"Informática");
-		Categoria cat02 = new Categoria(2,"Escritório");
+	@Autowired
+	private CategoriaServici service;
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> listar(@PathVariable Integer id) {
 		
-		List <Categoria> lista = new ArrayList<>();
-		lista.add(cat01);
-		lista.add(cat02);
+		Categoria obj = service.buscar(id);
 		
-		return lista;
+		return ResponseEntity.ok(obj);
+		
 	}
 }
