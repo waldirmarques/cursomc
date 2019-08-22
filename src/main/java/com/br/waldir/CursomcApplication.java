@@ -15,9 +15,9 @@ import com.br.waldir.repositories.ProdutoRepository;
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {
 	
-	@Autowired
+	@Autowired //Alto instancia a classe sem precisar do new.
 	private CategoriaRepository categoriaRepository;
-	@Autowired
+	@Autowired 
 	private ProdutoRepository produtoRepository;
 	
 	public static void main(String[] args) {

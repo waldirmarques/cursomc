@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -22,6 +24,7 @@ public class Produto implements Serializable{
 	private String nome;
 	private Double preco;
 	
+	@JsonBackReference //Ele dis que do outro lado já foram listados as categorias. Ele omite a lista de categoria
 	@ManyToMany //Anotação referente a junção de duas tabelas
 	@JoinTable(name="PRODUTO_CATEGORIA",
 			joinColumns = @JoinColumn(name="produto_id"),
@@ -95,9 +98,6 @@ public class Produto implements Serializable{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-	
-	
-		
+	}	
 	
 }
