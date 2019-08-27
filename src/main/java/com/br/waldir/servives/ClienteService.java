@@ -3,22 +3,22 @@ package com.br.waldir.servives;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.br.waldir.domain.Categoria;
-import com.br.waldir.repositories.CategoriaRepository;
+import com.br.waldir.domain.Cliente;
+import com.br.waldir.repositories.ClienteRepository;
 import com.br.waldir.servives.exceptions.ObjectNotFoundException;
 
 import java.util.Optional;
 
 @Service
-public class CategoriaService {
+public class ClienteService {
 	
 	@Autowired //Essa anotação faz com que o objeto seja estanciado assim como está.
-	private CategoriaRepository repo;
+	private ClienteRepository repo;
 	
-	public Categoria buscar(Integer id) {
-		Optional <Categoria> obj = repo.findById(id);
+	public Cliente buscar(Integer id) {
+		Optional <Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
 
 }

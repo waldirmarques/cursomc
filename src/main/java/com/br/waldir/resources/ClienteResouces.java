@@ -8,20 +8,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.br.waldir.domain.Categoria;
-import com.br.waldir.servives.CategoriaService;
+import com.br.waldir.domain.Cliente;
+import com.br.waldir.servives.ClienteService;
 
 @RestController
-@RequestMapping(value="/categorias")
-public class CategoriaResouces {
+@RequestMapping(value="/clientes")
+public class ClienteResouces {
 	
 	@Autowired
-	private CategoriaService service;
+	private ClienteService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> listar(@PathVariable Integer id) {
 		
-		Categoria obj = service.buscar(id);
+		Cliente obj = service.buscar(id);
 		
 		return ResponseEntity.ok(obj);
 		

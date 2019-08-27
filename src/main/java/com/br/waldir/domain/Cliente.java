@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.br.waldir.domain.enums.TipoCliente;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable {
@@ -28,7 +29,8 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
-	//Mostrar qual dos campos do lado endereço foi mapeado
+	
+	@JsonManagedReference//Mostrar qual dos campos do lado endereço foi mapeado
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> endereco = new ArrayList<>();
 	
