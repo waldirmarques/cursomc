@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.br.waldir.domain.Categoria;
 import com.br.waldir.domain.Cidade;
+import com.br.waldir.domain.Cliente;
+import com.br.waldir.domain.Endereco;
 import com.br.waldir.domain.Estado;
 import com.br.waldir.domain.Produto;
+import com.br.waldir.domain.enums.TipoCliente;
 import com.br.waldir.repositories.CategoriaRepository;
 import com.br.waldir.repositories.CidadeRepository;
+import com.br.waldir.repositories.ClienteRepository;
+import com.br.waldir.repositories.EnderecoRepository;
 import com.br.waldir.repositories.EstadoRepository;
 import com.br.waldir.repositories.ProdutoRepository;
 
@@ -27,13 +32,17 @@ public class CursomcApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired 
 	private CidadeRepository cidadeRepository;
-	
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired EnderecoRepository enderecoRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		
 		Categoria cat1 = new Categoria(null,"Informatica");
 		Categoria cat2 = new Categoria(null,"Escritorio");
 		
@@ -51,6 +60,7 @@ public class CursomcApplication implements CommandLineRunner {
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
 		produtoRepository.saveAll(Arrays.asList(pro1,pro2,pro3));
 		
+		
 		Estado s1 = new Estado(null,"Minas Gerais");
 		Estado s2 = new Estado(null, "São Paula");
 		
@@ -65,7 +75,18 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(s1,s2));
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3));
 		
+		Cliente cli1 = new Cliente(null,"Waldir Marques","waldir.marques@dce.ufpb.br","4143532532",TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("634634414","674735634"));
 		
+		//Cliente cli2 = new Cliente(null,"Gustavo","gustavo.venezes@dce.ufpb.br","351423545",TipoCliente.PESSOAFISICA);
+		
+		Endereco e1 = new Endereco(null, "sertão", "313", "centro", "Perto a faculdade", "580000000",cli1,c1);
+		Endereco e2 = new Endereco(null, "vida loka", "754", "são josé", "Perto a escola", "580573457",cli1,c2);
+		
+		cli1.getEndereco().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 	}
 
 }
