@@ -13,6 +13,7 @@ import com.br.waldir.domain.Cidade;
 import com.br.waldir.domain.Cliente;
 import com.br.waldir.domain.Endereco;
 import com.br.waldir.domain.Estado;
+import com.br.waldir.domain.ItemPedido;
 import com.br.waldir.domain.Pagamento;
 import com.br.waldir.domain.PagamentoComBoleto;
 import com.br.waldir.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.br.waldir.repositories.CidadeRepository;
 import com.br.waldir.repositories.ClienteRepository;
 import com.br.waldir.repositories.EnderecoRepository;
 import com.br.waldir.repositories.EstadoRepository;
+import com.br.waldir.repositories.ItemPedidoRepository;
 import com.br.waldir.repositories.PagamentoRepository;
 import com.br.waldir.repositories.PedidoRepository;
 import com.br.waldir.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	PagamentoRepository pagamentoRepository;
+	@Autowired
+	ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -117,6 +121,19 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, pro1, 0.00, 1, 20000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, pro3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, pro2, 0.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		pro1.getItens().addAll(Arrays.asList(ip1));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		ped2.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 
 }
