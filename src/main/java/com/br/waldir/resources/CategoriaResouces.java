@@ -31,7 +31,6 @@ public class CategoriaResouces {
 		
 	}
 	
-	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj){// throws ObjectNotFoundException{
 		obj = service.insert(obj);
