@@ -22,20 +22,23 @@ public class CategoriaResouces {
 	@Autowired
 	private CategoriaService service;
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	@RequestMapping(value="/{id}", method = RequestMethod.GET) //lista categoria por id
 	public ResponseEntity<?> listar(@PathVariable Integer id) {
-		
-		Categoria obj = service.buscar(id);
-		
+		Categoria obj = service.find(id);		
 		return ResponseEntity.ok(obj);
-		
 	}
 	
-	@RequestMapping(method=RequestMethod.POST)
+	@RequestMapping(method=RequestMethod.POST) //adiciona uma nova categoria
 	public ResponseEntity<Void> insert(@RequestBody Categoria obj){// throws ObjectNotFoundException{
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
 				buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
 	}
 }
