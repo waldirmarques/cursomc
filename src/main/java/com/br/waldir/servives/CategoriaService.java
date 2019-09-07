@@ -1,10 +1,12 @@
 package com.br.waldir.servives;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.br.waldir.domain.Categoria;
 import com.br.waldir.repositories.CategoriaRepository;
+import com.br.waldir.servives.exceptions.DataIntegrityException;
 import com.br.waldir.servives.exceptions.ObjectNotFoundException;
 
 import java.util.Optional;
@@ -29,6 +31,17 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivevel excluir uma Categoria que possui profutos");
+		}
+		
 	}
 
 }
