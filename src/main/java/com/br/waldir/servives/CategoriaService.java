@@ -9,6 +9,7 @@ import com.br.waldir.repositories.CategoriaRepository;
 import com.br.waldir.servives.exceptions.DataIntegrityException;
 import com.br.waldir.servives.exceptions.ObjectNotFoundException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,10 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possivevel excluir uma Categoria que possui profutos");
 		}
 		
+	}
+
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 
 }
