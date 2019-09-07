@@ -12,7 +12,7 @@ import com.br.waldir.domain.Pedido;
 import com.br.waldir.servives.PedidoService;
 
 @RestController
-@RequestMapping(value="/categorias")
+@RequestMapping(value="/pedidos")
 public class PedidoResouces {
 	
 	@Autowired
