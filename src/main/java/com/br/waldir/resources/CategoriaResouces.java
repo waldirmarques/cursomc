@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -34,15 +36,17 @@ public class CategoriaResouces {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST) //adiciona uma nova categoria
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){// throws ObjectNotFoundException{
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){// throws ObjectNotFoundException{
+		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").
 				buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){
+	@RequestMapping(value="/{id}",method=RequestMethod.PUT) //atualizar uma categoria
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto,@PathVariable Integer id){
+		Categoria obj = service.fromDTO(objDto);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
@@ -70,7 +74,4 @@ public class CategoriaResouces {
 		Page<CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
-	
-	
-	
 }

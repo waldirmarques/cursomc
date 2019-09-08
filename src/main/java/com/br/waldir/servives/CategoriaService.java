@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.br.waldir.domain.Categoria;
+import com.br.waldir.dto.CategoriaDTO;
 import com.br.waldir.repositories.CategoriaRepository;
 import com.br.waldir.servives.exceptions.DataIntegrityException;
 import com.br.waldir.servives.exceptions.ObjectNotFoundException;
@@ -46,7 +47,6 @@ public class CategoriaService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivevel excluir uma Categoria que possui profutos");
 		}
-		
 	}
 
 	public List<Categoria> findAll() {
@@ -56,6 +56,10 @@ public class CategoriaService {
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage , Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(),objDto.getNome());
 	}
 
 }
